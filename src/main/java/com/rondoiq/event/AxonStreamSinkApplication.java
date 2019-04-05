@@ -13,12 +13,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 
 @SpringBootApplication
-@EnableBinding(Processor.class)
+@EnableBinding(Sink.class)
 public class AxonStreamSinkApplication {
 
     public static void main(String[] args) {
@@ -41,7 +42,7 @@ public class AxonStreamSinkApplication {
 
     @Bean
     public IntegrationFlow flow(EventBus eventBus) {
-        return IntegrationFlows.from(Processor.INPUT)
+        return IntegrationFlows.from(Sink.INPUT)
                 .handle(new AxonOutboundChannelAdapter(eventBus))
                 .get();
     }
